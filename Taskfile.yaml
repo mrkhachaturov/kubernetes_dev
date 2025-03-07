@@ -13,6 +13,10 @@ vars:
   PRIVATE_DIR: '{{.ROOT_DIR}}/.private'
   TALOSCONFIG: '{{.ROOT_DIR}}/talos/clusterconfig/talosconfig'
 
+dotenv:
+  - '{{.KUBERNETES_DIR}}/apps/system-upgrade/.env'
+
+
 env:
   KUBECONFIG: '{{.ROOT_DIR}}/kubeconfig'
   SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
@@ -22,6 +26,7 @@ includes:
   bootstrap: .taskfiles/bootstrap
   talos: .taskfiles/talos
   template: .taskfiles/template
+  kubernetes: .taskfiles/kubernetes
 
 tasks:
 

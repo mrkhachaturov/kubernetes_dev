@@ -53,6 +53,28 @@ function apply_namespaces() {
     done
 }
 
+# Resources to be applied before the helmfile charts are installed
+function apply_resources() {
+    log debug "Applying resources"
+
+    local -r resources_file="${ROOT_DIR}/.taskfiles/template/resources/resources.yaml.j2"
+
+    if ! output=$(render_template "${resources_file}") || [[ -z "${output}" ]]; then
+        exit 1
+    fi
+
+    if echo "${output}" | kubectl diff --filename - &>/dev/null; then
+        log info "Resources are up-to-date"
+        return
+    fi
+
+    if echo "${output}" | kubectl apply --server-side --filename - &>/dev/null; then
+        log info "Resources applied"
+    else
+        log error "Failed to apply resources"
+    fi
+}
+
 # SOPS secrets to be applied before the helmfile charts are installed
 function apply_sops_secrets() {
     log debug "Applying secrets"
@@ -102,11 +124,12 @@ function apply_helm_releases() {
 }
 
 function main() {
-    check_cli helmfile kubectl kustomize sops talhelper yq
+    check_cli helmfile kubectl kustomize sops talhelper yq minijinja-cli op jq
 
     # Apply resources and Helm releases
     wait_for_nodes
     apply_namespaces
+    apply_resources
     apply_sops_secrets
     apply_helm_releases
 

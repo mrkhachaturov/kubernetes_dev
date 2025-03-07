@@ -98,6 +98,9 @@ class Plugin(makejinja.plugin.Plugin):
     def data(self) -> makejinja.plugin.Data:
         data = self._data
 
+        # Extract nodes for easy access
+        nodes = data.get('nodes', [])  # Initialize nodes from data
+
         # Set default values for optional fields
         data.setdefault('node_default_gateway', nthhost(data.get('node_cidr'), 1))
         data.setdefault('node_dns_servers', ['1.1.1.1', '1.0.0.1'])
@@ -113,6 +116,11 @@ class Plugin(makejinja.plugin.Plugin):
         bgp_keys = ['cilium_bgp_router_addr', 'cilium_bgp_router_asn', 'cilium_bgp_node_asn']
         bgp_enabled = all(data.get(key) for key in bgp_keys)
         data.setdefault('cilium_bgp_enabled', bgp_enabled)
+
+        # Check if any node has an eth1_address defined
+        more_than_one_interface = any(node.get('eth1_address') for node in nodes)
+        data.setdefault('more_than_one_interface', more_than_one_interface)
+
 
         # If there is more than one node, enable spegel
         spegel_enabled = len(data.get('nodes')) > 1

@@ -5,7 +5,7 @@ talosVersion: v1.9.4
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.32.2
 
-clusterName: kubernetes
+clusterName: main
 endpoint: https://#{ cluster_api_addr }#:6443
 
 clusterPodNets:
@@ -28,7 +28,7 @@ cniConfig:
 nodes:
   #% for item in nodes %#
   - hostname: "#{ item.name }#"
-    ipAddress: "#{ item.address }#"
+    ipAddress: "#{ item.eth0_address }#"
     #% if item.disk.startswith('/') %#
     installDisk: "#{ item.disk }#"
     #% else %#
@@ -41,13 +41,13 @@ nodes:
     controlPlane: #{ (item.controller) | string | lower }#
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "#{ item.mac_addr | lower }#"
+          hardwareAddr: "#{ item.eth0_mac_addr | lower }#"
         #% if node_vlan_tag %#
         vlans:
           - vlanId: #{ node_vlan_tag }#
             addresses:
-              - "#{ item.address }#/#{ node_cidr.split('/') | last }#"
-            mtu: #{ item.mtu | default(1500, true) }#
+              - "#{ item.eth0_address }#/#{ node_cidr.split('/') | last }#"
+            mtu: #{ item.eth0_mtu | default(1500, true) }#
             routes:
               - network: "0.0.0.0/0"
                 gateway: "#{ node_default_gateway }#"
@@ -58,16 +58,26 @@ nodes:
         #% else %#
         dhcp: false
         addresses:
-          - "#{ item.address }#/#{ node_cidr.split('/') | last }#"
+          - "#{ item.eth0_address }#/#{ node_cidr.split('/') | last }#"
         routes:
           - network: "0.0.0.0/0"
             gateway: "#{ node_default_gateway }#"
-        mtu: #{ item.mtu | default(1500, true) }#
+        mtu: #{ item.eth0_mtu | default(1500, true) }#
         #% if item.controller %#
         vip:
           ip: "#{ cluster_api_addr }#"
         #% endif %#
         #% endif %#
+
+      #% if item.eth1_address %#
+      - deviceSelector:
+          hardwareAddr: "#{ item.eth1_mac_addr | lower }#"
+        dhcp: false
+        addresses:
+          - "#{ item.eth1_address }#/#{ node_cidr.split('/') | last }#"
+        mtu: #{ item.eth1_mtu | default(1500, true) }#
+      #% endif %#
+
     #% if talos_patches('%s' % (item.name)) | length == 0 %#
     #% if item.encrypt_disk | default(false, true) %#
     patches:
