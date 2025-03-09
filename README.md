@@ -5,6 +5,9 @@ Welcome to my opinionated and extensible template for deploying a single Kuberne
 At a high level this project makes use of [makejinja](https://github.com/mirkolenz/makejinja) to read in configuration files ([cluster.yaml](./cluster.sample.yaml) & [nodes.yaml](./nodes.sample.yaml)). Makejinja will render out templates that will allow you to install a Kubernetes cluster with the features mentioned below.
 <div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.894856278366112; padding: 40px 0 40px 0;"><iframe src="https://guides.astrateam.net/embed/cm8241kba0ih4icgevuzcvsj7?embed_v=2" loading="lazy" title="Github Demo" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
+[View Demo](https://guides.astrateam.net/embed/cm8241kba0ih4icgevuzcvsj7?embed_v=2)
+
+
 ## ✨ Features
 
 A Kubernetes cluster deployed on-top of [Talos Linux](https://github.com/siderolabs/talos) with an opinionated implementation of [Flux](https://github.com/fluxcd/flux2) using [GitHub](https://github.com/) as the Git provider, [sops](https://github.com/getsops/sops) to manage secrets and [cloudflared](https://github.com/cloudflare/cloudflared) to access applications external to your local network.
