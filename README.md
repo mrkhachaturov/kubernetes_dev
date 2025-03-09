@@ -2,11 +2,10 @@
 
 Welcome to my opinionated and extensible template for deploying a single Kubernetes cluster. The goal of this project is to make it easier for people interested in using Kubernetes to deploy a cluster at home on bare-metal or VMs. This template closely mirrors my personal [home-ops](https://github.com/onedr0p/home-ops) repository.
 
-At a high level this project makes use of [makejinja](https://github.com/mirkolenz/makejinja) to read in configuration files ([cluster.yaml](./cluster.sample.yaml) & [nodes.yaml](./nodes.sample.yaml)). Makejinja will render out templates that will allow you to install a Kubernetes cluster with the features mentioned below.
-<div style="position: relative; box-sizing: content-box; max-height: 80vh; max-height: 80svh; width: 100%; aspect-ratio: 1.894856278366112; padding: 40px 0 40px 0;"><iframe src="https://guides.astrateam.net/embed/cm8241kba0ih4icgevuzcvsj7?embed_v=2" loading="lazy" title="Github Demo" allow="clipboard-write" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
+![Screenshot of Demo](https://d16ev9qffqt5qm.cloudfront.net/?s3_key=cm7qni90400ew0a0i7hj1tz4e/putj2uJ6VyRJEeOR1_InQ.jpg)
 [View Demo](https://guides.astrateam.net/embed/cm8241kba0ih4icgevuzcvsj7?embed_v=2)
-[Embed Title](https://youtu.be/8bh238ekw3 "@embed")
+
 
 ## ✨ Features
 
