@@ -1,5 +1,9 @@
 [env]
 _.python.venv = { path = "{{config_root}}/.venv", create = true }
+# Included file paths
+_.file = [
+  "{{config_root}}/kubernetes/apps/system-upgrade/.env"
+]
 # File paths
 KUBECONFIG = "{{config_root}}/kubeconfig"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
@@ -11,10 +15,6 @@ BOOTSTRAP_DIR = "{{config_root}}/bootstrap"
 KUBERNETES_DIR = "{{config_root}}/kubernetes"
 SCRIPTS_DIR = "{{config_root}}/scripts"
 TALOS_DIR = "{{config_root}}/talos"
-# Included file paths
-_.file = [
-  "{{config_root}}/kubernetes/apps/system-upgrade/.env"
-]
 
 [tasks.deps]
 description = "Install Python dependencies"
@@ -23,8 +23,8 @@ run = "uv pip install -r requirements.txt"
 [tools]
 "python" = "3.13"
 "uv" = "latest"
-"aqua:budimanjojo/talhelper" = "3.0.19"
-"aqua:cli/cli" = "2.67.0"
+"aqua:budimanjojo/talhelper" = "3.0.20"
+"aqua:cli/cli" = "2.68.1"
 "aqua:cloudflare/cloudflared" = "2025.2.1"
 "aqua:cue-lang/cue" = "0.12.0"
 "aqua:FiloSottile/age" = "1.2.1"
